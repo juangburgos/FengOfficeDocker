@@ -8,7 +8,7 @@ else # first time
 	echo "Fengoffice will be installed."
      # Install XAMPP
 	chmod +x xampp-linux-x64-installer.run 
-	./xampp-linux-x64-installer.run
+	./xampp-linux-x64-installer.run --mode unattended
 	rm xampp-linux-x64-installer.run 
 	/opt/lampp/lampp stop 
 	rm -rf /opt/lampp/htdocs/ 
