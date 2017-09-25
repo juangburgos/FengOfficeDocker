@@ -10,7 +10,8 @@ RUN apt-get -y install cron \
 && apt-get -y install unzip
 
 # Add crontab file in the cron directory
-ADD crontab /etc/cron.d/fengtasks && chmod 0644 /etc/cron.d/fengtasks
+ADD crontab /etc/cron.d/fengtasks 
+RUN chmod 0644 /etc/cron.d/fengtasks
 # Add custom MySql config
 ADD my.cnf /opt/my.cnf
 
@@ -26,7 +27,8 @@ RUN wget -O /opt/xampp-linux-x64-installer.run https://www.apachefriends.org/xam
 RUN wget -O /opt/fengoffice.zip https://sourceforge.net/projects/opengoo/files/fengoffice/fengoffice_3.4.2.2/fengoffice_3.4.2.2.zip
 
 # Add custom bootstrap script
-ADD bootstrap.sh /opt/bootstrap.sh && chmod +x /opt/bootstrap.sh
+ADD bootstrap.sh /opt/bootstrap.sh 
+RUN chmod +x /opt/bootstrap.sh
 
 # RUN cron : http://dev.im-bot.com/docker-cron/
 CMD ./opt/bootstrap.sh

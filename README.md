@@ -1,34 +1,45 @@
-* Restart
+## Feng Office Docker
+
+### Build
 
 ```bash
-docker stop fengoffice
-docker rm fengoffice
-rm -rf /srv/fengoffice/
-mkdir /srv/fengoffice/
-chmod -R 777 /srv/fengoffice/
 docker build --rm -t juangburgos/myfengoffice .
-
 ```
 
-* Test
+### Prepare
+
+Move to directory where we want the mounted volumes in the host machine and create necessary directory.
 
 ```bash
+# Move to Target Dir
+cd srv
+# Create Dir
+mkdir ${PWD}/fengoffice/
+chmod -R 777 ${PWD}/fengoffice/
+```
+
+### Run
+
+* Interactive (**Mandatory** for first run)
+
+```bash
+rm -rf fengoffice/; mkdir fengoffice/; chmod -R 777 fengoffice/;
 docker run --name fengoffice -it --rm \
---publish 192.168.1.41:8081:80 \
---volume /srv/fengoffice:/opt/lampp:Z \
+-p 80:80 \
+-v ${PWD}/fengoffice:/opt/lampp:Z \
 juangburgos/myfengoffice
 ```
 
-* Deploy
+* Detached
 
 ```bash
 docker run --name fengoffice --detach --restart always \
---publish 192.168.1.41:8081:80 \
---volume /srv/fengoffice:/opt/lampp:Z \
+-p 80:80 \
+-v ${PWD}/fengoffice:/opt/lampp:Z \
 juangburgos/myfengoffice
 ```
 
-**NOTE** : Wait a little before calling the webapp.
+**NOTE** : If this is the first time the container is started, startup procedure might take some minutes.
 
 ---
 
@@ -36,16 +47,20 @@ juangburgos/myfengoffice
 
 * Database user is ```root```, *no password* (empty) and any database name will do.
 
-* Access MySql databse
+* The **Absolute script URL** must be the **public Ip** of the docker **host** with the **mapped port**, otherwise the page will not load correctly
+
+* Access MySql databsae
+
+First enter the container
+
+```bash
+docker exec -it fengoffice /bin/bash
+```
+
+Then use the *mysql client*
 
 ```bash
 /opt/lampp/bin/mysql -u root -p
-```
-
-* Need to map full
-
-```bash
-/opt/lampp/
 ```
 
 
