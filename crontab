@@ -1,0 +1,2 @@
+*/5 * * * * root env - `cat /root/env.txt` php /opt/lampp/htdocs/cron.php
+# An empty line is required at the end of this file for a valid cron file.
